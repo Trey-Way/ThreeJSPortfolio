@@ -3,52 +3,53 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import * as THREE from 'three'
-import { Canvas } from "@react-three/fiber";
+import ThreeCanvas from './ThreeCanvas'
 
+Canvas1 = 0;
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+const renderer = new THREE.WebGLRenderer(
+  Canvas1 = document.querySelector('#bg'),
+);
+
+renderer.setPixelRatio( window.devicePixelRatio );
+renderer.setSize( window.innerWidth, window.innerHeight);
+camera.position.setZ(30);
+
+renderer.render(scene, camera);
+
+const geometry = new THREE.TorusGeometry( 10, 3, 16, 100)
+const material = new THREE.MeshBasicMaterial ({ color: 0xFF6347, wireframe: true});
+const torus = new THREE.Mesh( geometry, material);
+
+scene.add(torus)
+
+function animate() {
+  requestAnimationFrame( animate );
+
+  torus.rotation.x += 0.01;
+  torus.rotation.y += 0.01;
+  torus.rotation.z += 0.01;
+
+
+  renderer.render( scene, camera);
+}
 
 
 function App() {
   const [count, setCount] = useState(0)
-  
-  // Three JS Code
-
-  const scene = new THREE.Scene();
-
-  const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000);
-
-  const renderer = new THREE.WebGLRenderer(
-    Canvas = document.querySelector('#bg'),
-  );
-
-  renderer.setPixelRatio( window.devicePixelRatio );
-  renderer.setSize( window.innerWidth, window.innerHeight);
-  camera.position.setZ(30);
-
-  renderer.render(scene, camera);
-
-  const geometry = new THREE.TorusGeometry( 10, 3, 16, 100)
-  const material = new THREE.MeshBasicMaterial ({ color: 0xFF6347, wireframe: true});
-  const torus = new THREE.Mesh( geometry, material);
-
-  scene.add(torus)
-
-  function animate() {
-    requestAnimationFrame( animate );
-
-    torus.rotation.x += 0.01;
-    torus.rotation.y += 0.01;
-    torus.rotation.z += 0.01;
-
-
-    renderer.render( scene, camera);
-  }
 
   animate()
+
+ 
 
   return (
     <>
       <div>
-        <Canvas id="bg"></Canvas>
+        {Canvas1}
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
